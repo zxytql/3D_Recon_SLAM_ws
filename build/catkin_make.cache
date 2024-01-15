@@ -1,2 +1,0 @@
-OrbbecSDK_ROS1:beginner_tutorials:myagv_odometry:myagv_teleop:myagv_urdf:ydlidar_ros_driver
--DCATKIN_DEVEL_PREFIX=/home/elephant/3D_Recon_SLAM_ws/devel -DCMAKE_INSTALL_PREFIX=/home/elephant/3D_Recon_SLAM_ws/install -G Unix Makefiles
