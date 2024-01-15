@@ -1,8 +1,0 @@
-prefix=/home/elephant/3D_Recon_SLAM_ws/install
-
-Name: myagv_teleop
-Description: Description of myagv_teleop
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
