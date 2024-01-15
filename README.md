@@ -1,2 +1,8 @@
-# zxyros_ws
-3D创新应用设计大赛的ROS仓库，基于大象机器人MyAGV2023进行开发
+# 3D_Recon_SLAM_ws
+
+- Ubuntu 20.04
+- NVIDIA Jetson Orin Nano 4G
+  
+
+
+

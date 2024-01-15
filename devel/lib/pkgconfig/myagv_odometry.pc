@@ -1,0 +1,8 @@
+prefix=/home/elephant/3D_Recon_SLAM_ws/devel
+
+Name: myagv_odometry
+Description: Description of myagv_odometry
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
