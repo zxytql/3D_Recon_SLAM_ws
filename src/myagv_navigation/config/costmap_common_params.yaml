@@ -25,7 +25,7 @@ obstacle_layer:
 
   laser_scan_sensor:
     data_type: LaserScan
-    topic: /scan
+    topic: /scan_filtered
     marking: true
     clearing: true
     expected_update_rate: 0

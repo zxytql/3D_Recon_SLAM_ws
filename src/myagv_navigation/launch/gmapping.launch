@@ -1,5 +1,5 @@
 <launch>
-    <arg name="scan_topic" default="scan" />
+    <arg name="scan_topic" default="scan_filtered" />
 
     <node pkg="gmapping" type="slam_gmapping" name="gmapping" output="screen" clear_params="true">
 		<param name="base_frame" value="base_footprint"/>
@@ -35,6 +35,6 @@
         <param name="llsamplestep" value="0.01"/>
         <param name="lasamplerange" value="0.005"/>
         <param name="lasamplestep" value="0.005"/>
-        <remap from="scan" to="$(arg scan_topic)"/>
+        <remap from="scan_filtered" to="$(arg scan_topic)"/>
     </node>
 </launch>
