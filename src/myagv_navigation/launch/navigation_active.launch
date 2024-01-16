@@ -6,14 +6,15 @@
  <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser_link" args="0.065 0.0 0.08 3.14159265 0.0 0.0 /base_footprint /laser_frame 10" />
     <node pkg="tf" type="static_transform_publisher" name="base_link_to_imu_link" args="-0.015 0.0 0.0 0.0 0.0 0.0 /base_footprint /imu_raw 10" /> 
     
-  <arg name="map_file" default="$(find myagv_navigation)/map/map.yaml"/>
+  <!-- 在执行launch文件时加入参数 map_file:=$(YOUR MAP LOCATION).yaml-->
+  <!-- <arg name="map_file" default="$(find myagv_navigation)/map/map.yaml"/> -->
 
   <node name="map_server_for_test" pkg="map_server" type="map_server" args="$(arg map_file)" output="screen">
     <param name="frame_id" value="map"/>
   </node>
 
       <arg name="use_map_topic" default="struecan"/>
-      <arg name="scan_topic" default="scan"/>
+      <arg name="scan_topic" default="scan_filtered"/>
 
 
   <node pkg="amcl" type="amcl" name="amcl" output="screen">
