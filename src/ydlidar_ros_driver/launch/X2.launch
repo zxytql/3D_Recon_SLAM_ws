@@ -4,7 +4,9 @@
     <param name="port"         type="string" value="/dev/ttyTHS0"/>  
     <param name="frame_id"     type="string" value="laser_frame"/>
     <!--<param name="frame_id"     type="string" value="base_link"/>-->
-    <param name="ignore_array"     type="string" value="-50,50"/>
+    
+    <!-- 修改这里可以修改雷达屏蔽角度 -->
+    <param name="ignore_array"     type="string" value="-45,-10,10,45"/>
 
     <!-- int property -->
     <param name="baudrate"         type="int" value="115200"/>  
