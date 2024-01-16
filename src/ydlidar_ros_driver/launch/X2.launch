@@ -4,9 +4,9 @@
     <param name="port"         type="string" value="/dev/ttyTHS0"/>  
     <param name="frame_id"     type="string" value="laser_frame"/>
     <!--<param name="frame_id"     type="string" value="base_link"/>-->
-    
+
     <!-- 修改这里可以修改雷达屏蔽角度 -->
-    <param name="ignore_array"     type="string" value="-45,-10,10,45"/>
+    <!-- <param name="ignore_array"     type="string" value="-45,-10,10,45"/> -->
 
     <!-- int property -->
     <param name="baudrate"         type="int" value="115200"/>  
@@ -40,4 +40,9 @@
     args="0.0 0.0 0.2 3.1415 0.0 0 /base_footprint /laser_frame 40" /-->
 
   <!--node name="rviz" pkg="rviz" type="rviz" args="-d $(find ydlidar_ros_driver)/launch/lidar.rviz" /-->
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain" output="screen" name="laser_filter">
+
+      <rosparam command="load" file="$(find laser_filters)/my_params/box_filter.yaml" />
+
+  </node>
 </launch>
