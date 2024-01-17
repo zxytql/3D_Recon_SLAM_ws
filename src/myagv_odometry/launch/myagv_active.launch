@@ -5,11 +5,13 @@
     
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
     <!--node name="base2lodom_frame" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 1 /odom /base_footprint 50"/-->
     <node name="base2camera_link" pkg="tf" type="static_transform_publisher" args="0.13 0 0.131 0 0 0 /base_footprint /camera_link 50"/>
-    <node name="base2imu_link" pkg="tf" type="static_transform_publisher" args="0 0 0 0 3.14159 3.14159 /base_footprint /imu 50"/>
-        
-    <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf" output="screen">
+
+    <node name="base2imu_link" pkg="tf" type="static_transform_publisher" args="0 0 0 3.14 0 0  /base_footprint /imu 50"/>
+
+    <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf" output="screen"> 
       <param name="output_frame" value="odom"/>
       <param name="base_footprint_frame" value="base_footprint"/>
       <param name="freq" value="30.0"/>

@@ -13,7 +13,7 @@ oscillation_distance: 0.1
 base_global_planner: "global_planner/GlobalPlanner"  
 base_local_planner: "teb_local_planner/TebLocalPlannerROS"
 
-max_planning_retries: 1
+max_planning_retries: 10
 
 recovery_behavior_enabled: true
 clearing_rotation_allowed: true

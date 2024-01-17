@@ -9,12 +9,12 @@
   <!-- 在执行launch文件时加入参数 map_file:=$(YOUR MAP LOCATION).yaml-->
   <!-- <arg name="map_file" default="$(find myagv_navigation)/map/map.yaml"/> -->
 
-  <node name="map_server_for_test" pkg="map_server" type="map_server" args="$(arg map_file)" output="screen">
+  <!-- <node name="map_server_for_test" pkg="map_server" type="map_server" args="$(arg map_file)" output="screen">
     <param name="frame_id" value="map"/>
-  </node>
+  </node> -->
 
       <arg name="use_map_topic" default="struecan"/>
-      <arg name="scan_topic" default="scan_filtered"/>
+      <arg name="scan_topic" default="scan"/>
 
 
   <node pkg="amcl" type="amcl" name="amcl" output="screen">

@@ -24,8 +24,9 @@ obstacle_layer:
     inflation_radius: 0.03
 
   laser_scan_sensor:
+    frame_name: laser_frame
     data_type: LaserScan
-    topic: /scan_filtered
+    topic: scan
     marking: true
     clearing: true
     expected_update_rate: 0
