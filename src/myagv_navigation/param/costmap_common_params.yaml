@@ -9,8 +9,8 @@ always_send_full_costmap: true
 obstacle_layer:
   enabled: true
 
-  obstacle_range: 2.5 #2
-  raytrace_range: 3.0 #2
+  obstacle_range: 2.5 #2 # 规划考虑几米内障碍物
+  raytrace_range: 3.0 #2 # 实时清除几米内障碍物
   inflation_radius: 0.04
   combination_method: 1
   observation_sources: laser_scan_sensor 
@@ -26,7 +26,7 @@ obstacle_layer:
 inflation_layer:
   enabled: true
   cost_scaling_factor: 5.0 #10
-  inflation_radius: 0.25
+  inflation_radius: 0.25 #膨胀层半径
 
 static_layer:
   enabled: true
