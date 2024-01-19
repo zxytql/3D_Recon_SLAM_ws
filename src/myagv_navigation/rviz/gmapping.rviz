@@ -7,6 +7,8 @@ Panels:
         - /Global Options1
         - /Map1/Position1
         - /TF1/Frames1
+        - /Map2
+        - /Map3
       Splitter Ratio: 0.6526610255241394
     Tree Height: 361
   - Class: rviz/Selection
@@ -236,7 +238,7 @@ Visualization Manager:
       Draw Behind: false
       Enabled: true
       Name: Map
-      Topic: /move_base/local_costmap/costmap
+      Topic: /move_base/global_costmap/costmap
       Unreliable: false
       Use Timestamp: false
       Value: true
@@ -324,6 +326,16 @@ Visualization Manager:
       Transport Hint: raw
       Unreliable: false
       Value: true
+    - Alpha: 0.699999988079071
+      Class: rviz/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic: /move_base/local_costmap/costmap
+      Unreliable: false
+      Use Timestamp: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 0; 0; 0
@@ -347,7 +359,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 3.832542657852173
+      Distance: 3.7773537635803223
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -355,17 +367,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -0.38631850481033325
-        Y: 0.16390365362167358
-        Z: 2.21836145897214e-07
+        X: -0.7401394248008728
+        Y: -0.019873548299074173
+        Z: 1.0485133543625125e-06
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.909796953201294
+      Pitch: 1.0797969102859497
       Target Frame: <Fixed Frame>
-      Yaw: 2.465425729751587
+      Yaw: 2.61542010307312
     Saved: ~
 Window Geometry:
   Displays:
@@ -385,5 +397,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1358
-  X: 172
-  Y: 239
+  X: 188
+  Y: 210
