@@ -577,7 +577,7 @@ int main(int argc, char **argv)
 {
   // Initialize ROS
   ros::init(argc, argv, "robot_pose_ekf");
-  ROS_INFO("I'M HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+  // ROS_INFO("I'M HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
   // create filter class
   OdomEstimationNode my_filter_node;
 
