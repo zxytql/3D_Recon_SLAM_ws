@@ -27,3 +27,55 @@
 [01/22 14:39:24.674874][info][10690][DeviceManager.cpp:15] Current found device(s): (1)
 [01/22 14:39:24.674895][info][10690][DeviceManager.cpp:24] 	- Name: Orbbec Gemini 2, PID: 0x0670, SN/ID: AY3C73100GP, Connection: USB2.0
 [01/22 14:39:24.674911][debug][10690][DeviceManager.cpp:55] DeviceManager construct done!
+[01/22 17:38:10.145632][debug][7039][Context.cpp:29] Context creating. work_dir=/home/elephant/3D_Recon_SLAM_ws
+[01/22 17:38:10.146811][debug][7039][Context.cpp:48] Config file version=1.1
+[01/22 17:38:10.146993][debug][7039][FrameBufferManager.cpp:23] Max global frame buffer size updated! size=2048.000MB
+[01/22 17:38:10.147038][info][7039][Context.cpp:67] Context created with config: default config!
+[01/22 17:38:10.147094][info][7039][Context.cpp:72] Context work_dir=/home/elephant/3D_Recon_SLAM_ws
+[01/22 17:38:10.147132][debug][7039][DeviceManager.cpp:30] DeviceManager init ...
+[01/22 17:38:10.147140][debug][7039][LinuxPal.cpp:38] createObPal: create LinuxPal!
+[01/22 17:38:10.148378][debug][7039][DeviceManager.cpp:34] Enable USB Device Enumerator ...
+[01/22 17:38:10.172148][debug][7039][EnumeratorLibusb.cpp:323] queryDevicesInfo done!
+[01/22 17:38:10.172361][debug][7039][ObV4lDevice.cpp:346] Found video4linux: video0
+[01/22 17:38:10.172969][debug][7039][ObV4lDevice.cpp:396] Cannot find busnum/devnum for /dev/video0
+[01/22 17:38:10.173034][debug][7039][UsbDeviceEnumerator.cpp:161] Current usb device port list:
+[01/22 17:38:10.173046][debug][7039][UsbDeviceEnumerator.cpp:164]  - 1-2.2-4.0 | Orbbec Gemini 2 Depth Camera
+[01/22 17:38:10.173054][debug][7039][UsbDeviceEnumerator.cpp:164]  - 1-2.2-4.2 | Orbbec Gemini 2 IR Camera
+[01/22 17:38:10.173107][debug][7039][UsbDeviceEnumerator.cpp:164]  - 1-2.2-4.4 | Orbbec Gemini 2 RGB Camera
+[01/22 17:38:10.173113][debug][7039][UsbDeviceEnumerator.cpp:164]  - 1-2.2-4.6 | Orbbec Gemini Data Channel
+[01/22 17:38:10.173117][debug][7039][UsbDeviceEnumerator.cpp:164]  - 1-2.2-4.7 | Orbbec Gemini 2 IMU
+[01/22 17:38:10.173342][info][7039][LinuxPal.cpp:112] Create PollingDeviceWatcher!
+[01/22 17:38:10.173416][debug][7039][UsbDeviceEnumerator.cpp:69] Found 1 device(s):
+[01/22 17:38:10.173429][debug][7039][UsbDeviceEnumerator.cpp:72]   - Name: Orbbec Gemini 2, PID: 0x0670, SN/ID: AY3C73100GP, connection: USB2.0
+[01/22 17:38:10.173444][info][7039][DeviceManager.cpp:15] Current found device(s): (1)
+[01/22 17:38:10.173469][info][7039][DeviceManager.cpp:24] 	- Name: Orbbec Gemini 2, PID: 0x0670, SN/ID: AY3C73100GP, Connection: USB2.0
+[01/22 17:38:10.173492][debug][7039][DeviceManager.cpp:55] DeviceManager construct done!
+[01/22 17:38:17.896179][debug][7082][Context.cpp:29] Context creating. work_dir=/home/elephant/3D_Recon_SLAM_ws
+[01/22 17:38:17.896351][debug][7082][Context.cpp:48] Config file version=1.1
+[01/22 17:38:17.896387][debug][7082][FrameBufferManager.cpp:23] Max global frame buffer size updated! size=2048.000MB
+[01/22 17:38:17.896403][info][7082][Context.cpp:67] Context created with config: default config!
+[01/22 17:38:17.896439][info][7082][Context.cpp:72] Context work_dir=/home/elephant/3D_Recon_SLAM_ws
+[01/22 17:38:17.896462][debug][7082][DeviceManager.cpp:30] DeviceManager init ...
+[01/22 17:38:17.896469][debug][7082][LinuxPal.cpp:38] createObPal: create LinuxPal!
+[01/22 17:38:17.897556][debug][7082][DeviceManager.cpp:34] Enable USB Device Enumerator ...
+[01/22 17:38:18.114032][debug][7082][EnumeratorLibusb.cpp:323] queryDevicesInfo done!
+[01/22 17:38:18.114272][debug][7082][ObV4lDevice.cpp:346] Found video4linux: video5
+[01/22 17:38:18.115134][debug][7082][ObV4lDevice.cpp:346] Found video4linux: video3
+[01/22 17:38:18.115501][debug][7082][ObV4lDevice.cpp:346] Found video4linux: video1
+[01/22 17:38:18.115826][debug][7082][ObV4lDevice.cpp:346] Found video4linux: video6
+[01/22 17:38:18.116108][debug][7082][ObV4lDevice.cpp:346] Found video4linux: video4
+[01/22 17:38:18.116375][debug][7082][ObV4lDevice.cpp:346] Found video4linux: video2
+[01/22 17:38:18.116641][debug][7082][ObV4lDevice.cpp:346] Found video4linux: video0
+[01/22 17:38:18.117071][debug][7082][ObV4lDevice.cpp:396] Cannot find busnum/devnum for /dev/video0
+[01/22 17:38:18.117185][debug][7082][UsbDeviceEnumerator.cpp:161] Current usb device port list:
+[01/22 17:38:18.117200][debug][7082][UsbDeviceEnumerator.cpp:164]  - 1-2.2-4.0 | Orbbec Gemini 2 Depth Camera
+[01/22 17:38:18.117207][debug][7082][UsbDeviceEnumerator.cpp:164]  - 1-2.2-4.2 | Orbbec Gemini 2 IR Camera
+[01/22 17:38:18.117212][debug][7082][UsbDeviceEnumerator.cpp:164]  - 1-2.2-4.4 | Orbbec Gemini 2 RGB Camera
+[01/22 17:38:18.117217][debug][7082][UsbDeviceEnumerator.cpp:164]  - 1-2.2-4.6 | Orbbec Gemini Data Channel
+[01/22 17:38:18.117221][debug][7082][UsbDeviceEnumerator.cpp:164]  - 1-2.2-4.7 | Orbbec Gemini 2 IMU
+[01/22 17:38:18.117401][info][7082][LinuxPal.cpp:112] Create PollingDeviceWatcher!
+[01/22 17:38:18.117460][debug][7082][UsbDeviceEnumerator.cpp:69] Found 1 device(s):
+[01/22 17:38:18.117473][debug][7082][UsbDeviceEnumerator.cpp:72]   - Name: Orbbec Gemini 2, PID: 0x0670, SN/ID: AY3C73100GP, connection: USB2.0
+[01/22 17:38:18.117486][info][7082][DeviceManager.cpp:15] Current found device(s): (1)
+[01/22 17:38:18.117508][info][7082][DeviceManager.cpp:24] 	- Name: Orbbec Gemini 2, PID: 0x0670, SN/ID: AY3C73100GP, Connection: USB2.0
+[01/22 17:38:18.117527][debug][7082][DeviceManager.cpp:55] DeviceManager construct done!

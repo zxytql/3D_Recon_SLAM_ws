@@ -35,10 +35,10 @@
     <arg name="enable_ir_auto_exposure" default="true"/>
     <arg name="enable_sync_output_accel_gyro" default="true"/>   
     <arg name="enable_accel" default="true"/>
-    <arg name="accel_rate" default="100hz"/>
+    <arg name="accel_rate" default="100Hz"/>
     <arg name="accel_range" default="4g"/>
     <arg name="enable_gyro" default="true"/>
-    <arg name="gyro_rate" default="100hz"/>
+    <arg name="gyro_rate" default="100Hz"/>
     <arg name="gyro_range" default="1000dps"/>
     <arg name="liner_accel_cov" default="0.01"/>
     <arg name="angular_vel_cov" default="0.01"/>
