@@ -1,3 +1,6 @@
 depth/
 rgb/
 *.bag
+depth.txt
+rgb.txt
+groundtruth.txt
