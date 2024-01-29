@@ -56,7 +56,7 @@ with open(groundtruth_txt_path, 'w') as txt_file_pose:
                         normalized_depth *= 255
                         cv_image = normalized_depth.astype(numpy.uint8)
 
-                        timestr = "%.8f" %  msg.header.stamp.to_sec() # 时间戳命名
+                        timestr = "%.6f" %  msg.header.stamp.to_sec() # 时间戳命名
                         image_name = timestr + '.png'# an extension is necessary
                         # image_name = str(num_depth) + '.png'# 编号命名
                         cv2.imwrite(depth_path + image_name, cv_image)  
@@ -65,14 +65,14 @@ with open(groundtruth_txt_path, 'w') as txt_file_pose:
                         # np.save(depth_path + image_name, cv_image)  
 
                         # Write timestamp and filename to the text file
-                        txt_file_depth.write("{:.6f} /depth/{:.6f}.png\n".format(t.to_sec(), t.to_sec()))
+                        txt_file_depth.write("{:.6f} depth/{:.6f}.png\n".format(float(timestr), float(timestr)))
                         print(depth_path + image_name) # Shell输出
                         num_depth += 1
 
                     if topic == "/camera/color/image_raw": 
                         # RGB
                         cv_image = bridge.imgmsg_to_cv2(msg, "bgr8")
-                        timestr = "%.8f" %  msg.header.stamp.to_sec()
+                        timestr = "%.6f" %  msg.header.stamp.to_sec()
                         image_name = timestr + '.png'# an extension is necessary
                         # image_name = str(num_rgb) + '.png'
 
@@ -80,5 +80,5 @@ with open(groundtruth_txt_path, 'w') as txt_file_pose:
                         cv2.imwrite(rgb_path + image_name, cv_image)
 
                         # Write timestamp and filename to the text file
-                        txt_file_rgb.write("{:.6f} /rgb/{:.6f}.png\n".format(t.to_sec(), t.to_sec()))
+                        txt_file_rgb.write("{:.6f} rgb/{:.6f}.png\n".format(float(timestr), float(timestr)))
                         num_rgb +=1 
