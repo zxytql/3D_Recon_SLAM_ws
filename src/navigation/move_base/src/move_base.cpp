@@ -96,6 +96,7 @@ namespace move_base {
     planner_thread_ = new boost::thread(boost::bind(&MoveBase::planThread, this));
 
     //for commanding the base
+    //创建发布者，话题名分别为cmd_vel, current_goal, goal和recovery_status
     vel_pub_ = nh.advertise<geometry_msgs::Twist>("cmd_vel", 1);
     current_goal_pub_ = private_nh.advertise<geometry_msgs::PoseStamped>("current_goal", 0 );
 
@@ -106,10 +107,12 @@ namespace move_base {
     //we'll provide a mechanism for some people to send goals as PoseStamped messages over a topic
     //they won't get any useful information back about its status, but this is useful for tools
     //like nav_view and rviz
+    //提供消息类型为geometry_msgs::PoseStamped的发送goals的接口，比如cb为MoveBase::goalCB，在rviz中输入的目标点就是通过这个函数来响应的：
     ros::NodeHandle simple_nh("move_base_simple");
     goal_sub_ = simple_nh.subscribe<geometry_msgs::PoseStamped>("goal", 1, [this](auto& goal){ goalCB(goal); });
 
     //we'll assume the radius of the robot to be consistent with what's specified for the costmaps
+    //设置costmap参数
     private_nh.param("local_costmap/inscribed_radius", inscribed_radius_, 0.325);
     private_nh.param("local_costmap/circumscribed_radius", circumscribed_radius_, 0.46);
     private_nh.param("clearing_radius", clearing_radius_, circumscribed_radius_);
@@ -120,10 +123,12 @@ namespace move_base {
     private_nh.param("recovery_behavior_enabled", recovery_behavior_enabled_, true);
 
     //create the ros wrapper for the planner's costmap... and initializer a pointer we'll use with the underlying map
+    //实例化指针
     planner_costmap_ros_ = new costmap_2d::Costmap2DROS("global_costmap", tf_);
     planner_costmap_ros_->pause();
 
     //initialize the global planner
+    //初始化全局路径规划器
     try {
       planner_ = bgp_loader_.createInstance(global_planner);
       planner_->initialize(bgp_loader_.getName(global_planner), planner_costmap_ros_);
@@ -133,10 +138,12 @@ namespace move_base {
     }
 
     //create the ros wrapper for the controller's costmap... and initializer a pointer we'll use with the underlying map
+    //实例化指针
     controller_costmap_ros_ = new costmap_2d::Costmap2DROS("local_costmap", tf_);
     controller_costmap_ros_->pause();
 
     //create a local planner
+    //初始化局部路径规划器
     try {
       tc_ = blp_loader_.createInstance(local_planner);
       ROS_INFO("Created local_planner %s", local_planner.c_str());
@@ -147,16 +154,20 @@ namespace move_base {
     }
 
     // Start actively updating costmaps based on sensor data
+    //开始根据传感器数据，更新costmap
     planner_costmap_ros_->start();
     controller_costmap_ros_->start();
 
     //advertise a service for getting a plan
+    //全局规划
     make_plan_srv_ = private_nh.advertiseService("make_plan", &MoveBase::planService, this);
 
     //advertise a service for clearing the costmaps
+    //清除一次costmap
     clear_costmaps_srv_ = private_nh.advertiseService("clear_costmaps", &MoveBase::clearCostmapsService, this);
 
     //if we shutdown our costmaps when we're deactivated... we'll do that now
+    //关闭costmap
     if(shutdown_costmaps_){
       ROS_DEBUG_NAMED("move_base","Stopping costmaps initially");
       planner_costmap_ros_->stop();
@@ -164,6 +175,7 @@ namespace move_base {
     }
 
     //load any user specified recovery behaviors, and if that fails load the defaults
+    //加载指定的恢复器，为空则使用默认的
     if(!loadRecoveryBehaviors(private_nh)){
       loadDefaultRecoveryBehaviors();
     }
@@ -175,8 +187,10 @@ namespace move_base {
     recovery_index_ = 0;
 
     //we're all set up now so we can start the action server
+    //开启move_base的动作执行器
     as_->start();
-
+    
+    //启动动态参数服务器
     dsrv_ = new dynamic_reconfigure::Server<move_base::MoveBaseConfig>(ros::NodeHandle("~"));
     dynamic_reconfigure::Server<move_base::MoveBaseConfig>::CallbackType cb = [this](auto& config, auto level){ reconfigureCB(config, level); };
     dsrv_->setCallback(cb);
@@ -187,6 +201,7 @@ namespace move_base {
 
     //The first time we're called, we just want to make sure we have the
     //original configuration
+    //第一次调用该函数时，确保所有的配置都是原始配置
     if(!setup_)
     {
       last_config_ = config;
@@ -224,17 +239,21 @@ namespace move_base {
 
     oscillation_timeout_ = config.oscillation_timeout;
     oscillation_distance_ = config.oscillation_distance;
+    //如果全局路径规划器的参数被修改了，则
     if(config.base_global_planner != last_config_.base_global_planner) {
       boost::shared_ptr<nav_core::BaseGlobalPlanner> old_planner = planner_;
       //initialize the global planner
+      //初始化全局路径规划器
       ROS_INFO("Loading global planner %s", config.base_global_planner.c_str());
       try {
         planner_ = bgp_loader_.createInstance(config.base_global_planner);
 
         // wait for the current planner to finish planning
+        //等待规划结束
         boost::unique_lock<boost::recursive_mutex> lock(planner_mutex_);
 
         // Clean up before initializing the new planner
+        //在开始规划新路径前，清除旧路径
         planner_plan_->clear();
         latest_plan_->clear();
         controller_plan_->clear();
@@ -249,7 +268,7 @@ namespace move_base {
         config.base_global_planner = last_config_.base_global_planner;
       }
     }
-
+    //如果局部路径规划器的参数被修改了，则
     if(config.base_local_planner != last_config_.base_local_planner){
       boost::shared_ptr<nav_core::BaseLocalPlanner> old_planner = tc_;
       //create a local planner
@@ -275,6 +294,7 @@ namespace move_base {
     last_config_ = config;
   }
 
+  //传入goal，将geometry_msgs::PoseStamped形式的goal转换成move_base_msgs::MoveBaseActionGoal，再发布到对应类型的goal话题中：
   void MoveBase::goalCB(const geometry_msgs::PoseStamped::ConstPtr& goal){
     ROS_DEBUG_NAMED("move_base","In ROS goal callback, wrapping the PoseStamped in the action message and re-sending to the server.");
     move_base_msgs::MoveBaseActionGoal action_goal;
@@ -342,7 +362,7 @@ namespace move_base {
   bool MoveBase::clearCostmapsService(std_srvs::Empty::Request &req, std_srvs::Empty::Response &resp){
     //clear the costmaps
     boost::unique_lock<costmap_2d::Costmap2D::mutex_t> lock_controller(*(controller_costmap_ros_->getCostmap()->getMutex()));
-    controller_costmap_ros_->resetLayers();
+    controller_costmap_ros_->resetLayers(); ///调用外部包，该函数的功能是重置地图，内部包括重置总地图、重置地图各层
 
     boost::unique_lock<costmap_2d::Costmap2D::mutex_t> lock_planner(*(planner_costmap_ros_->getCostmap()->getMutex()));
     planner_costmap_ros_->resetLayers();
@@ -363,6 +383,7 @@ namespace move_base {
 
     geometry_msgs::PoseStamped start;
     //if the user does not specify a start pose, identified by an empty frame id, then use the robot's pose
+    //获取起始点，如果没有起始点，那就获取当前的全局位置为起始点：
     if(req.start.header.frame_id.empty())
     {
         geometry_msgs::PoseStamped global_pose;
@@ -379,6 +400,7 @@ namespace move_base {
 
     if (make_plan_clear_costmap_) {
       //update the copy of the costmap the planner uses
+      //按照设定的更新范围进行costmap的更新
       clearCostmapWindows(2 * clearing_radius_, 2 * clearing_radius_);
     }
 
@@ -389,23 +411,27 @@ namespace move_base {
           req.goal.pose.position.x, req.goal.pose.position.y);
 
       //search outwards for a feasible goal within the specified tolerance
+      //在规定的公差范围内向外寻找可行的goal
       geometry_msgs::PoseStamped p;
       p = req.goal;
       bool found_legal = false;
       float resolution = planner_costmap_ros_->getCostmap()->getResolution();
-      float search_increment = resolution*3.0;
+      float search_increment = resolution*3.0; //将分辨率乘以3倍，以此为增量向外寻找路径
       if(req.tolerance > 0.0 && req.tolerance < search_increment) search_increment = req.tolerance;
       for(float max_offset = search_increment; max_offset <= req.tolerance && !found_legal; max_offset += search_increment) {
         for(float y_offset = 0; y_offset <= max_offset && !found_legal; y_offset += search_increment) {
           for(float x_offset = 0; x_offset <= max_offset && !found_legal; x_offset += search_increment) {
 
             //don't search again inside the current outer layer
+            //不找离本位置太近的点
             if(x_offset < max_offset-1e-9 && y_offset < max_offset-1e-9) continue;
 
             //search to both sides of the desired goal
+            //从X，Y两个方向找
             for(float y_mult = -1.0; y_mult <= 1.0 + 1e-9 && !found_legal; y_mult += 2.0) {
 
               //if one of the offsets is 0, -1*0 is still 0 (so get rid of one of the two)
+              //如果偏移量过小，则抛弃
               if(y_offset < 1e-9 && y_mult < -1.0 + 1e-9) continue;
 
               for(float x_mult = -1.0; x_mult <= 1.0 + 1e-9 && !found_legal; x_mult += 2.0) {
@@ -439,6 +465,7 @@ namespace move_base {
     }
 
     //copy the plan into a message to send out
+    //将规划好的路径传给resp然后传出去
     resp.plan.poses.resize(global_plan.size());
     for(unsigned int i = 0; i < global_plan.size(); ++i){
       resp.plan.poses[i] = global_plan[i];
@@ -448,6 +475,7 @@ namespace move_base {
   }
 
   MoveBase::~MoveBase(){
+    //析构函数，释放内存
     recovery_behaviors_.clear();
 
     delete dsrv_;
@@ -1158,12 +1186,14 @@ namespace move_base {
       n.setParam("aggressive_reset/reset_distance", circumscribed_radius_ * 4);
 
       //first, we'll load a recovery behavior to clear the costmap
+      //初始化cons_clear，调用ClearCostmapRecovery插件，清除costmap
       boost::shared_ptr<nav_core::RecoveryBehavior> cons_clear(recovery_loader_.createInstance("clear_costmap_recovery/ClearCostmapRecovery"));
       cons_clear->initialize("conservative_reset", &tf_, planner_costmap_ros_, controller_costmap_ros_);
       recovery_behavior_names_.push_back("conservative_reset");
       recovery_behaviors_.push_back(cons_clear);
 
       //next, we'll load a recovery behavior to rotate in place
+      //调用RotateRecovery，自转
       boost::shared_ptr<nav_core::RecoveryBehavior> rotate(recovery_loader_.createInstance("rotate_recovery/RotateRecovery"));
       if(clearing_rotation_allowed_){
         rotate->initialize("rotate_recovery", &tf_, planner_costmap_ros_, controller_costmap_ros_);
@@ -1172,12 +1202,14 @@ namespace move_base {
       }
 
       //next, we'll load a recovery behavior that will do an aggressive reset of the costmap
+      //同上类似，但这里采用激进的方式，在上面的初始化中给了4倍重置半径
       boost::shared_ptr<nav_core::RecoveryBehavior> ags_clear(recovery_loader_.createInstance("clear_costmap_recovery/ClearCostmapRecovery"));
       ags_clear->initialize("aggressive_reset", &tf_, planner_costmap_ros_, controller_costmap_ros_);
       recovery_behavior_names_.push_back("aggressive_reset");
       recovery_behaviors_.push_back(ags_clear);
 
       //we'll rotate in-place one more time
+      //旋转
       if(clearing_rotation_allowed_){
         recovery_behaviors_.push_back(rotate);
         recovery_behavior_names_.push_back("rotate_recovery");

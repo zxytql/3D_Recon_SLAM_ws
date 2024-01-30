@@ -533,6 +533,8 @@ void Costmap2DROS::resume()
 
 void Costmap2DROS::resetLayers()
 {
+  //在该函数中，首先将总的地图信息重置为缺省值。然后调用各层的reset函数对各层进行重置。
+  //在costmap_2d/plugins中针对不同地图层，有不同的reset方式
   Costmap2D* top = layered_costmap_->getCostmap();
   top->resetMap(0, 0, top->getSizeInCellsX(), top->getSizeInCellsY());
   std::vector < boost::shared_ptr<Layer> > *plugins = layered_costmap_->getPlugins();
