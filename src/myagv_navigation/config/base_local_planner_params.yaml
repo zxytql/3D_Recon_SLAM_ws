@@ -1,12 +1,12 @@
 DWAPlannerROS:
-  max_vel_trans: 0.3
-  min_vel_trans: 0.1
-  max_vel_x: 0.3
-  min_vel_x: 0.1
-  max_vel_y: 0.3
-  min_vel_y: 0.1
-  max_rot_vel: 0.3
-  min_rot_vel: 0.1
+  max_vel_trans: 0.1
+  min_vel_trans: -0.1
+  max_vel_x: 0.1
+  min_vel_x: -0.1
+  max_vel_y: 0.1
+  min_vel_y: -0.1
+  max_rot_vel: 0.1
+  min_rot_vel: -0.1
   acc_lim_x: 1.0
   acc_lim_y: 1.0
   acc_lim_theta: 5
@@ -40,5 +40,5 @@ DWAPlannerROS:
   use_dwa: true
   restore_defaults: False
   
-  global_frame_id: odom
+  global_frame_id: map
   meter_scoring: true
