@@ -1,0 +1,17 @@
+<launch>
+
+    <!-- odometry and laser -->
+    <include file = "$(find myagv_odometry)/launch/myagv_active.launch"/>
+
+    <!-- gemini2 -->
+    <include file = "$(find orbbec_camera)/launch/gemini2.launch" />
+
+    <!-- gmapping and rviz -->
+    <include file = "$(find myagv_navigation)/launch/myagv_slam_laser.launch" />
+
+    <!-- move base -->
+    <include file = "$(find myagv_navigation)/launch/move_base.launch" />
+
+    <!-- explore lite -->
+    <!-- 自己新开一个终端启动 -->
+</launch>

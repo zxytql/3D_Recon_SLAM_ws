@@ -10,6 +10,9 @@ void cmdCallback(const geometry_msgs::Twist& msg)
 	linearX = msg.linear.x;
 	linearY = msg.linear.y;
 	angularZ = msg.angular.z;
+
+	//VAL_LIMIT(linearX, -0.2, 0.2);
+	//VAL_LIMIT(linearY, -0.2, 0.2);
 //	std:: "cmdCallback: " << msg.linear.x << ", linearX: " << linearX << ", linearY: " << linearY <<", angularZ: " << angularZ <<std::endl;
 }
 

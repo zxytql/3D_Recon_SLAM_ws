@@ -6,6 +6,19 @@
 #include "myagv_odometry/myAGV.h"
 #include "std_msgs/Int8.h"
 
+#define VAL_LIMIT(val, min, max) \
+    do                           \
+    {                            \
+        if ((val) <= (min))      \
+        {                        \
+            (val) = (min);       \
+        }                        \
+        else if ((val) >= (max)) \
+        {                        \
+            (val) = (max);       \
+        }                        \
+    } while (0)
+
 const unsigned char header[2] = { 0xfe, 0xfe };
 
 boost::asio::io_service iosev;
@@ -488,6 +501,8 @@ void MyAGV::publisherOdom()
 
 void MyAGV::execute(double linearX, double linearY, double angularZ)
 {   
+    VAL_LIMIT(linearX, -0.2, 0.2);
+	VAL_LIMIT(linearY, -0.2, 0.2);
     currentTime = ros::Time::now();    
     double dt = (currentTime - lastTime).toSec();
     sampleFreq = 1.0f/dt;
@@ -515,6 +530,9 @@ void MyAGV::execute(double linearX, double linearY, double angularZ)
             imu_data.angular_velocity.z = imu_data.angular_velocity.z - Gyroscope_Zdata_Offset;
             // std::cout <<"imu=" << imu_data.angular_velocity.x  << " "<< imu_data.angular_velocity.y << " "  <<  imu_data.angular_velocity.z   << std::endl;
             MahonyAHRSupdateIMU(0.0, 0.0, imu_data.angular_velocity.z, 0.0, 0.0, imu_data.linear_acceleration.z);
+            ROS_INFO_STREAM("execute: " << "linearX: " 
+                << linearX << ", linearY: " << linearY << ", angularZ: " << angularZ << std::endl);
+            //ROS_INFO("12121212");
             writeSpeed(linearX, linearY, angularZ);
             publisherOdom();
             publisherImuSensor();
